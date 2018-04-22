@@ -1333,10 +1333,11 @@ class _Rolling_and_Expanding(_Rolling):
             # to avoid potential overflow, cast the data to float64
             X = X.astype('float64')
             Y = Y.astype('float64')
+            center = self.center or False
             mean = lambda x: x.rolling(window, self.min_periods,
-                                       center=self.center).mean(**kwargs)
+                                       center=center).mean(**kwargs)
             count = (X + Y).rolling(window=window,
-                                    center=self.center).count(**kwargs)
+                                    center=center).count(**kwargs)
             bias_adj = count / (count - ddof)
             return (mean(X * Y) - mean(X) * mean(Y)) * bias_adj
 
